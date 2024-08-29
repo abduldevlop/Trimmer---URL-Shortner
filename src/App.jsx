@@ -6,6 +6,8 @@ import DashboardPage from "./pages/DashboardPage";
 import AuthPage from "./pages/AuthPage";
 import LinkPage from "./pages/LinkPage";
 import RedirectLinkPage from "./pages/RedirectLinkPage";
+import UrlProvider from "./context/Context";
+import ProtectedRoute from "./components/ui/ProtectedRoute";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -18,7 +20,11 @@ const App = () => {
         },
         {
           path: "/dashboard",
-          element: <DashboardPage />,
+          element: (
+            <ProtectedRoute>
+              <DashboardPage />
+            </ProtectedRoute>
+          ),
         },
         {
           path: "/auth",
@@ -26,7 +32,11 @@ const App = () => {
         },
         {
           path: "/link/:id",
-          element: <LinkPage />,
+          element: (
+            <ProtectedRoute>
+              <LinkPage />,
+            </ProtectedRoute>
+          ),
         },
         {
           path: "/:id",
@@ -35,7 +45,11 @@ const App = () => {
       ],
     },
   ]);
-  return <RouterProvider router={router} />;
+  return (
+    <UrlProvider>
+      <RouterProvider router={router} />
+    </UrlProvider>
+  );
 };
 
 export default App;
